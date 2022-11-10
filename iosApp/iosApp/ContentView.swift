@@ -25,8 +25,11 @@ class GreetingInfo: ObservableObject {
     let viewModel = GreetingViewModel()
     
     func start() {
-        viewModel.state.watch { state in
-            self.number = state as! Int
+//        viewModel.state.watch { state in
+//            self.number = state as! Int
+//        }
+        GreetingRepo().numbersCommonFlow().watch { number in
+            self.number = number as! Int
         }
     }
 }

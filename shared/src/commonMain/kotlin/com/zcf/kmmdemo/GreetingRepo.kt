@@ -18,9 +18,6 @@ class GreetingRepo {
     }
   }
 
-  suspend fun number(): Int {
-    delay(1000)
-    return 999
-  }
+  fun numbersCommonFlow() = numbers().asCommonFlow()
 
 }
