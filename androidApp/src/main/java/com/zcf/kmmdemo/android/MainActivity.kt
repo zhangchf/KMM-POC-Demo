@@ -78,18 +78,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun Greeting(
-    text: String,
-    viewModel: GreetingViewModel
-) {
-    val state by viewModel.state.collectAsState(initial = -1)
-    Column {
-        Text(text = text)
-        Text("Repo number: $state")
-    }
-}
-
 @Preview
 @Composable
 fun DefaultPreview() {

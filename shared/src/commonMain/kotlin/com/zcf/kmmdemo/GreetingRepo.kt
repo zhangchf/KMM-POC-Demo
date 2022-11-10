@@ -1,10 +1,14 @@
 package com.zcf.kmmdemo
 
+import com.zcf.kmmdemo.api.JsonPlaceholderService
+import com.zcf.kmmdemo.model.Todo
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class GreetingRepo {
+class GreetingRepo(
+  val jsonPlaceholderService: JsonPlaceholderService
+) {
 
   fun numbers(): Flow<Int> {
     return flow {
@@ -19,5 +23,9 @@ class GreetingRepo {
   }
 
   fun numbersCommonFlow() = numbers().asCommonFlow()
+
+  suspend fun getTodos(): List<Todo> {
+    return jsonPlaceholderService.getTodos()
+  }
 
 }
