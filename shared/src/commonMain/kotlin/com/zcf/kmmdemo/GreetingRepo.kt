@@ -10,11 +10,10 @@ class GreetingRepo(
   val jsonPlaceholderService: JsonPlaceholderService
 ) {
 
-  fun numbers(): Flow<Int> {
+  fun greetingNumber(): Flow<Int> {
     return flow {
       var number = 0
       while (number < 10) {
-        println("zcf1 emit: $number")
         emit(number)
         number += 1
         delay(2000)
@@ -22,7 +21,7 @@ class GreetingRepo(
     }
   }
 
-  fun numbersCommonFlow() = numbers().asCommonFlow()
+  fun greetingNumberCommonFlow() = greetingNumber().asCommonFlow()
 
   suspend fun getTodos(): List<Todo> {
     return jsonPlaceholderService.getTodos()

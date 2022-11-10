@@ -2,15 +2,13 @@ import SwiftUI
 import shared
 
 struct ContentView: View {
-	let greet = Greeting().greeting()
-    
+    let platformInfo = PlatformInfo().info()
     @StateObject var greetingInfo = GreetingInfo()
-
 
 	var body: some View {
         VStack {
-            Text("\(greet)")
-            Text("Repo number: \(greetingInfo.number)")
+            Text("Hello, \(platformInfo)")
+            Text("Repo number: \(greetingInfo.greetingNumber)")
             
             List(greetingInfo.todos, id: \.id) { todo in
                 Text("\(todo.id). \(todo.title), Completed: \(todo.completed.description)")
@@ -23,14 +21,14 @@ struct ContentView: View {
 }
 
 class GreetingInfo: ObservableObject {
-    @Published var number: Int = -1
+    @Published var greetingNumber: Int = -1
     @Published var todos: [Todo] = []
     
     let viewModel = GreetingViewModel()
     
     func start() {
-        viewModel.state.watch { state in
-            self.number = state as! Int
+        viewModel.greetingNumber.watch { state in
+            self.greetingNumber = state as! Int
         }
         viewModel.todos.watch { todos in
             self.todos = todos as! [Todo]

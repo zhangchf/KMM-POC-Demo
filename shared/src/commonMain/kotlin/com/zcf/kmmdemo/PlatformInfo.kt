@@ -1,9 +1,9 @@
 package com.zcf.kmmdemo
 
-class Greeting {
+class PlatformInfo {
     private val platform: Platform = getPlatform()
 
-    fun greeting(): String {
+    fun info(): String {
         return "Hello, ${platform.name}!"
     }
 }

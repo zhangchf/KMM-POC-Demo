@@ -3,8 +3,8 @@ package com.zcf.kmmdemo.android
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -15,15 +15,17 @@ import com.zcf.kmmdemo.GreetingViewModel
 
 @Composable
 fun Greeting(
-  text: String,
+  platformInfo: String,
   viewModel: GreetingViewModel
 ) {
-  val state by viewModel.state.collectAsState(initial = -1)
+  val greetingNumber by viewModel.greetingNumber.collectAsState(initial = -1)
   val todos by viewModel.todos.collectAsState(initial = emptyList())
 
-  Column {
-    Text(text = text)
-    Text("Repo number: $state")
+  Column(
+    modifier = Modifier.padding(16.dp)
+  ) {
+    Text(text = "Hello, $platformInfo")
+    Text("Repo number: $greetingNumber")
 
     Spacer(modifier = Modifier.height(20.dp))
     LazyColumn {
