@@ -19,12 +19,12 @@ class GreetingViewModel: SharedViewModel() {
   val todos: CommonFlow<List<Todo>> = _todos.asCommonFlow()
 
   init {
-    sharedScope.launch(context = Dispatchers.Default) {
+    sharedScope.launch {
       repo.greetingNumber().collectLatest { number ->
         _greetingNumber.update { number }
       }
     }
-    sharedScope.launch(context = Dispatchers.Default) {
+    sharedScope.launch {
       val todos = repo.getTodos()
       _todos.update { todos }
     }

@@ -2,6 +2,7 @@ package com.zcf.kmmdemo
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import platform.darwin.dispatch_async
 import platform.darwin.dispatch_get_main_queue
@@ -20,7 +21,7 @@ actual open class SharedViewModel actual constructor() {
 
 @ThreadLocal
 private var createViewModelScope: () -> CoroutineScope = {
-    CoroutineScope(createUIDispatcher())
+    CoroutineScope(Dispatchers.Main)
 }
 
 private fun createUIDispatcher(): CoroutineDispatcher = UIDispatcher()
