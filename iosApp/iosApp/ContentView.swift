@@ -32,7 +32,7 @@ struct ContentView: View {
 class GreetingInfo: ObservableObject {
     @Published var greetingNumber: Int = -1
     @Published var todos: [Todo] = []
-    @Published var state: GreetingState = GreetingState(todos: [], users: [])
+    @Published var state: GreetingState = GreetingState(todos: [], users: [], error: nil)
     
     let viewModel = GreetingViewModel()
     

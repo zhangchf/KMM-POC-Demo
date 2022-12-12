@@ -59,7 +59,6 @@ fun MyApplicationTheme(
 }
 
 class MainActivity : ComponentActivity() {
-    val viewModel = GreetingViewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -68,7 +67,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting(PlatformInfo().info(), viewModel)
+                    Greeting()
                 }
             }
         }
@@ -79,6 +78,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     MyApplicationTheme {
-        Greeting("Hello, Android!", GreetingViewModel())
+        Greeting()
     }
 }
