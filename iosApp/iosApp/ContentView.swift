@@ -26,13 +26,21 @@ struct ContentView: View {
             .onAppear {
                 greetingInfo.start()
             }
+            .alert(isPresented: $greetingInfo.showError) {
+                Alert(title: Text("Error"), message: Text("\(greetingInfo.state.error)"), dismissButton: .default(Text("OK")))
+            }
 	}
 }
 
 class GreetingInfo: ObservableObject {
     @Published var greetingNumber: Int = -1
     @Published var todos: [Todo] = []
-    @Published var state: GreetingState = GreetingState(todos: [], users: [], error: nil)
+    @Published var state: GreetingState = GreetingState(todos: [], users: [], error: "") {
+        didSet {
+            showError = !state.error.isEmpty
+        }
+    }
+    @Published var showError: Bool = false
     
     private var viewModel: GreetingViewModel
     init() {

@@ -57,8 +57,9 @@ fun GreetingContent(
 
   val platformInfo = PlatformInfo().info()
 
-  state.error?.let { errorMsg ->
-    showSnackbar(errorMsg)
+  if (state.error.isNotEmpty()) {
+    showSnackbar(state.error)
+    viewModel.clearError()
   }
 
   Column(modifier = Modifier.padding(16.dp)) {

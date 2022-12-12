@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 data class GreetingState(
   val todos: List<Todo> = emptyList(),
   val users: List<User> = emptyList(),
-  val error: String? = null
+  val error: String = "Test error!"
 )
 
 class GreetingViewModel: SharedViewModel() {
@@ -34,10 +34,10 @@ class GreetingViewModel: SharedViewModel() {
     sharedScope.launch {
       repo.getTodos()
         .onSuccess { todos ->
-          _states.update { it.copy(todos = todos, error = null) }
+          _states.update { it.copy(todos = todos, error = "") }
         }
         .onFailure { throwable ->
-          _states.update { it.copy(todos = emptyList(), error = throwable.message) }
+          _states.update { it.copy(todos = emptyList(), error = throwable.message ?: "Get todos failed!") }
         }
     }
   }
@@ -46,11 +46,15 @@ class GreetingViewModel: SharedViewModel() {
     sharedScope.launch {
       repo.getUsers()
         .onSuccess { users ->
-          _states.update { it.copy(users = users, error = null) }
+          _states.update { it.copy(users = users, error = "") }
         }
         .onFailure { throwable ->
-          _states.update { it.copy(users = emptyList(), error = throwable.message) }
+          _states.update { it.copy(users = emptyList(), error = throwable.message ?: "Get users failed!") }
         }
     }
+  }
+
+  fun clearError() {
+    _states.update { it.copy(error = "") }
   }
 }
