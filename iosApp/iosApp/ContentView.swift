@@ -10,7 +10,16 @@ struct ContentView: View {
             Text("Hello, \(platformInfo)")
             Text("Repo number: \(greetingInfo.greetingNumber)")
             
-            List(greetingInfo.todos, id: \.id) { todo in
+            let users = greetingInfo.state.users
+            let buttonText = users.isEmpty ? "Click to get users" : "Refresh users"
+            Button(buttonText) {
+                greetingInfo.getUsers()
+            }.padding(.top, 10)
+            List(users, id: \.id) { user in
+                Text("\(user.id). \(user.name), \(user.email)")
+            }
+            
+            List(greetingInfo.state.todos, id: \.id) { todo in
                 Text("\(todo.id). \(todo.title), Completed: \(todo.completed.description)")
             }
         }
@@ -23,19 +32,24 @@ struct ContentView: View {
 class GreetingInfo: ObservableObject {
     @Published var greetingNumber: Int = -1
     @Published var todos: [Todo] = []
+    @Published var state: GreetingState = GreetingState(todos: [], users: [])
     
     let viewModel = GreetingViewModel()
     
     func start() {
-        viewModel.greetingNumber.watch { state in
-            self.greetingNumber = state as! Int
+        viewModel.greetingNumber.watch { number in
+            self.greetingNumber = number as! Int
         }
-        viewModel.todos.watch { todos in
-            self.todos = todos as! [Todo]
+        viewModel.states.watch { state in
+            self.state = state!
         }
 //        GreetingRepo().numbersCommonFlow().watch { number in
 //            self.number = number as! Int
 //        }
+    }
+    
+    func getUsers() {
+        viewModel.getUsers()
     }
 }
 
