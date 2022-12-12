@@ -34,7 +34,10 @@ class GreetingInfo: ObservableObject {
     @Published var todos: [Todo] = []
     @Published var state: GreetingState = GreetingState(todos: [], users: [], error: nil)
     
-    let viewModel = GreetingViewModel()
+    private var viewModel: GreetingViewModel
+    init() {
+        viewModel = GreetingViewModel()
+    }
     
     func start() {
         viewModel.greetingNumber.watch { number in
