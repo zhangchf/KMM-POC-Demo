@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 data class GreetingState(
   val todos: List<Todo> = emptyList(),
   val users: List<User> = emptyList(),
-  val error: String = "Test error!"
+  val error: String = ""
 )
 
 class GreetingViewModel: SharedViewModel() {

@@ -4,6 +4,7 @@ import com.zcf.kmmdemo.model.Todo
 import com.zcf.kmmdemo.model.User
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.plugins.ConnectTimeoutException
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
@@ -15,6 +16,8 @@ class JsonPlaceholderService {
     const val URL_TODOS = "https://jsonplaceholder.typicode.com/todos"
     const val URL_USERS = "https://jsonplaceholder.typicode.com/users"
   }
+
+  private var requestCounter = 0
 
   private val httpClient = HttpClient {
     install(ContentNegotiation) {
@@ -37,6 +40,10 @@ class JsonPlaceholderService {
   }
 
   suspend fun getUsers(): Result<List<User>> {
+    requestCounter++
+    if (requestCounter%2 == 0) {
+      return Result.failure(ConnectTimeoutException(URL_USERS, 100, Throwable("Mocked throwable")))
+    }
     return try {
       val response = httpClient.get(URL_USERS)
       Result.success(response.body())
